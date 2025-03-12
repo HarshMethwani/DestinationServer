@@ -42,7 +42,7 @@ const queueEvent = (eventData: any) => {
 };
 
 // Webhook endpoint to receive Segment events
-router.post("/webhook", async (req, res) => {
+router.post("/webhook",verifySegmentSignature, async (req, res) => {
     console.log("Received Segment Webhook:", JSON.stringify(req.body, null, 2));
     queueEvent(req.body);
     res.status(200).json({ message: "Webhook received successfully" });
